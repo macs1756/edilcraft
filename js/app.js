@@ -104,4 +104,10 @@ function init(element) {
 init(imageComparisonSlider);
 
 
-
+window.addEventListener('load', ()=>{
+    document.querySelector('h1').classList.add('active');
+    document.querySelector('.initial__text p').classList.add('active');
+    document.querySelector('.image-comparison').classList.add('active');
+    document.querySelector('.initial__price').classList.add('active');
+    document.querySelector('.initial__more').classList.add('active');
+});
