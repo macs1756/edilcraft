@@ -133,10 +133,69 @@ window.addEventListener('load', ()=>{
     document.querySelector('.p3').classList.add('active');
     document.querySelector('.about__img').classList.add('active');
   }
+
+
+  if(document.querySelector('.t-left')){
+
+    const services = document.querySelectorAll('.t-left');
+
+    services.forEach((el)=>{
+      el.classList.add('active');
+    });
+
+    document.querySelector('.about__img').classList.add('active');
+  }
     
 });
 
 
+const swiper = new Swiper('.swiper', {
+  speed: 400,
+
+  navigation: {
+    nextEl: '.arrow__next',
+    prevEl: '.arrow__prev',
+  },
+  slidesPerView: 'auto',
+  freeMode: true,
+ 
+  breakpoints: {
+    0:{
+     
+      spaceBetween: 14,
+    },
+
+    600:{
+      
+      spaceBetween: 20,
+
+    }
+  }
+});
 
 
+const OPEN_CARD_BUTTON = document.querySelectorAll('.swiper__slide-plus');
+
+if(OPEN_CARD_BUTTON){
+
+  OPEN_CARD_BUTTON.forEach((button)=>{
+
+      button.addEventListener('click', ()=>{
+        const ALL_SLIDES = document.querySelectorAll('.swiper-slide');
+        ALL_SLIDES.forEach((el)=>{
+          el.classList.remove('active');
+        });
+        button.parentElement.parentElement.classList.add('active');
+        button.parentElement.parentElement.classList.add('.swiper-slide-active');
+      });
+
+
+
+
+      
+
+
+  });
+
+}
 
