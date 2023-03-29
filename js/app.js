@@ -145,34 +145,50 @@ window.addEventListener('load', ()=>{
 
     document.querySelector('.about__img').classList.add('active');
   }
+
+
+  if(document.querySelector('.portfolio h2')){
+    document.querySelector('.portfolio h2').classList.add('active');
+    document.querySelector('.portfolio__first p').classList.add('active');
+  }
+
+  if(document.querySelector('.contact h2')){
+
+    document.querySelector('.contact h2').classList.add('active');
+
+    document.querySelector('.contact__net-form').classList.add('active');
+
+    document.querySelector('.contact__net-graph').classList.add('active');
+
+  }
     
 });
 
 
-const swiper = new Swiper('.swiper', {
-  speed: 400,
-
-  navigation: {
-    nextEl: '.arrow__next',
-    prevEl: '.arrow__prev',
-  },
-  slidesPerView: 'auto',
-  freeMode: true,
- 
-  breakpoints: {
-    0:{
-     
-      spaceBetween: 14,
+if(document.querySelector('.swiper')){
+  const swiper = new Swiper('.swiper', {
+    speed: 400,
+    navigation: {
+      nextEl: '.arrow__next',
+      prevEl: '.arrow__prev',
     },
-
-    600:{
-      
-      spaceBetween: 20,
-
+    slidesPerView: 'auto',
+    freeMode: true,
+   
+    breakpoints: {
+      0:{
+       
+        spaceBetween: 14,
+      },
+  
+      600:{
+        
+        spaceBetween: 20,
+  
+      }
     }
-  }
-});
-
+  });
+}
 
 const OPEN_CARD_BUTTON = document.querySelectorAll('.swiper__slide-plus');
 
@@ -189,13 +205,98 @@ if(OPEN_CARD_BUTTON){
         button.parentElement.parentElement.classList.add('.swiper-slide-active');
       });
 
-
-
-
-      
-
-
   });
 
 }
 
+
+
+
+
+
+var input = document.querySelector("#phone");
+
+
+
+
+
+
+
+
+window.intlTelInput(input, {
+
+	separateDialCode: true,
+	initialCountry: "it",
+		
+});
+
+const FORM_NAME = document.querySelector('#name');
+
+const FORM_PHONE = document.querySelector('#phone');
+
+const FORM_SEND = document.querySelector('#form_send');
+
+
+FORM_SEND.addEventListener('click', ()=>{
+
+  
+
+  if(FORM_NAME.value.length >= 3){
+
+     FORM_NAME.style.border = '1px solid transparent';
+
+  }else{
+    FORM_NAME.style.border = '1px solid red';
+  }
+
+  if(+FORM_PHONE.value.length >= 5 && typeof +FORM_PHONE.value !== 'string'){
+    FORM_PHONE.style.border = '1px solid transparent';
+  }else{
+    FORM_PHONE.style.border = '1px solid red';
+  }
+
+  let dialCode = document.querySelector('.iti__selected-dial-code').innerText;
+  const FULL_TELL = dialCode + FORM_PHONE.value;
+
+
+
+
+
+  if(FORM_NAME.value.length >= 3 && +FORM_PHONE.value.length >= 5 && typeof +FORM_PHONE.value !== 'string'){
+
+    async function postMail(){
+		    
+      FORM_SEND.setAttribute('disabled', true);
+    
+      let res = await fetch("https://sel", {
+        method: "POST",
+        body: JSON.stringify({
+         name: FORM_NAME.value,
+         tell: FULL_TELL,
+       
+        }),
+      });
+     
+      if(res.ok){
+       
+        FULL_TELL = '';
+        FORM_PHONE.value = '';
+        FORM_NAME.value = '';
+        document.querySelector('.form__success-text').style.opacity = '1';
+    
+        FORM_SEND.removeAttribute('disabled');
+    
+      }else{
+        alert('error send messange');
+      }	
+    }
+    
+    postMail();
+
+  }
+
+
+
+
+
+});
